@@ -1,5 +1,5 @@
 const cds = require('@sap/cds');
-const { Books } = cds.entities;
+const { Orders } = cds.entities('orderapp.db');
 
 module.exports = srv => {
     const db = cds.db;
@@ -8,13 +8,13 @@ module.exports = srv => {
     //UPDATE : UPDATE
     //DELETE : DELETE
 
-    srv.on('READ', 'OrderSet', async req => {
-        results = [];
-        results = await db.run([
-            SELECT.from(Orders).where({ ID: req.data.ID })
-        ]);
-        return results;
-    });
+    // srv.on('READ', 'OrderSet', async req => {
+    //     results = [];
+    //     results = await db.run([
+    //         SELECT.from(Orders).where({ ID: req.data.ID })
+    //     ]);
+    //     return results;
+    // });
 
     //BEFORE
 
@@ -47,8 +47,8 @@ module.exports = srv => {
     srv.on('UPDATE', 'OrderSet', async (req, resp) => {
         results = [];
         results = await db.run([
-            UPDATE(Books).set(req.data).where({ ID: req.data.ID })
-
+          UPDATE(Orders).set(req.data).where({ID: req.data.ID
+})
         ])
             .then((resolve, reject) => {
                 if (resolve)
@@ -72,10 +72,10 @@ module.exports = srv => {
 
 
     //DELETE
-    srv.on('DELETE', 'BooksSet', async req => {
+    srv.on('DELETE', 'OrderSet', async req => {
         results = [];
         results = await db.run([
-            DELETE.from(Books).where({ ID: req.data.ID })
+            DELETE.from(Orders).where({ ID: req.data.ID })
         ]);
         return results;
     });
